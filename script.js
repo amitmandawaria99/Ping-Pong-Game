@@ -9,7 +9,8 @@ const rod1Name = "Rod 1";
 const rod2Name = "Rod 2";
 
 
-let score,
+let score1,
+    score2,
     maxScore,
     movement,
     rod,
@@ -17,6 +18,7 @@ let score,
     ballSpeedY = 2;
 
 let gameOn = false;
+var soundObj = new Audio();
 
 let windowWidth = window.innerWidth,
     windowHeight = window.innerHeight;
@@ -56,7 +58,8 @@ function resetBoard(rodName) {
         ballSpeedY = -2;
     }
 
-    score = 0;
+    score1 = 0;
+    score2 = 0;
     gameOn = false;
 
 }
@@ -131,23 +134,35 @@ window.addEventListener('keypress', function () {
 
                 // Check for Rod 1
                 if (ballY <= rod1Height) {
-                    ballSpeedY = -ballSpeedY; // Reverses the direction
-                    score++;
-
                     // Check if the game ends
                     if ((ballPos < rod1X) || (ballPos > (rod1X + rod1Width))) {
-                        storeWin(rod2Name, score);
+                        soundObj.src = "Hole+In+One.mp3";
+                        soundObj.play();
+                        storeWin(rod2Name, score2);
+                    }
+                    else {
+                        ballSpeedY = -ballSpeedY; // Reverses the direction
+                        score1++;
+                        soundObj.src = "bat+hit+ball.mp3";
+                        soundObj.play();
                     }
                 }
 
                 // Check for Rod 2
                 else if ((ballY + ballDia) >= (windowHeight - rod2Height)) {
-                    ballSpeedY = -ballSpeedY; // Reverses the direction
-                    score++;
-
                     // Check if the game ends
                     if ((ballPos < rod2X) || (ballPos > (rod2X + rod2Width))) {
-                        storeWin(rod1Name, score);
+                        soundObj.src = "Hole+In+One.mp3";
+                        soundObj.play();
+                        storeWin(rod1Name, score1);
+                        console.log("hii");
+                    }
+                    else {
+                        ballSpeedY = -ballSpeedY; // Reverses the direction
+                        score2++;
+                        soundObj.src = "bat+hit+ball.mp3";
+                        soundObj.play();
+                        console.log("hii");
                     }
                 }
 
